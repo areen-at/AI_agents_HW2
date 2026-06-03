@@ -466,30 +466,32 @@
 ## Phase 9 — Documentation & submission
 
 ### 9.1 Architecture docs (`docs/`)
-- [ ] `docs/architecture.md`: layer diagram + **class diagram** (from PRD §2.3)
-- [ ] `docs/threat-model.md`: expanded STRIDE table + controls
+- [x] `docs/architecture.md`: layer diagram + **class diagram** (from PRD §2.3)
+- [x] `docs/threat-model.md`: expanded STRIDE table + controls
 
 ### 9.2 README.md (the graded artifact)
-- [ ] Project overview
-- [ ] **Rules of the game**: persuasion-not-truth, no tie, topic-blind judge,
+- [x] Project overview
+- [x] **Rules of the game**: persuasion-not-truth, no tie, topic-blind judge,
       lying allowed, anti-agreement
-- [ ] **Architecture + class diagram** (embed/reference `docs/`)
-- [ ] **Threat model summary** + security controls
-- [ ] Setup via **UV**: `uv sync`, run menu, run via SDK (copy-paste commands)
-- [ ] **Prompts** used: Pro, Con, Judge (full text)
-- [ ] **Screenshots** (menu, running debate, verdict)
-- [ ] **Full dialogue log of session 1** (readable)
-- [ ] Engineering notes: timeouts, watchdog, gatekeeper, FIFO logging, JSON protocol,
+- [x] **Architecture + class diagram** (embed/reference `docs/`)
+- [x] **Threat model summary** + security controls
+- [x] Setup via **UV**: `uv sync`, run menu, run via SDK (copy-paste commands)
+- [x] **Prompts** used: Pro, Con, Judge (full text)
+- [~] **Screenshots** (menu, running debate, verdict) — text evidence committed;
+      image capture pending manual run
+- [x] **Full dialogue log of session 1** (readable)
+- [x] Engineering notes: timeouts, watchdog, gatekeeper, FIFO logging, JSON protocol,
       security controls
-- [ ] **Budget disclosure** if rounds reduced 10 → 5
-- [ ] Language note (English/Hebrew, not Arabic)
-- [ ] How to run tests + linters (`pytest`, `ruff`, `bandit`)
+- [x] **Budget disclosure** if rounds reduced 10 → 5
+- [x] Language note (English/Hebrew, not Arabic)
+- [x] How to run tests + linters (`pytest`, `ruff`, `bandit`)
 
 ### 9.3 Repository hygiene
-- [ ] Confirm `.env.example` committed; `.env` absent
-- [ ] Confirm `pyproject.toml` + `uv.lock` provision the full env
-- [ ] Make repo **public** (or share with lecturer) — verify access
-- [ ] Tag/release the submission commit
+- [x] Confirm `.env.example` committed; `.env` absent
+- [~] `pyproject.toml` provisions the env (`uv sync` / pip -e); `uv.lock` not yet
+      committed (generated on first `uv sync` — uv not installed in dev env)
+- [ ] Make repo **public** (or share with lecturer) — verify access  (manual)
+- [ ] Tag/release the submission commit  (manual)
 
 ### 9.4 Submission (pair)
 - [ ] Same repo link for both partners
@@ -576,4 +578,6 @@
 - [x] Phase 7 — SDK & interface
 - [~] Phase 8 — Hardening, real run, audit (live run + demos + audit done;
       screenshots and live web-search smoke test pending — see notes)
-- [ ] Phase 9 — Documentation & submission
+- [~] Phase 9 — Documentation & submission (README + architecture.md +
+      threat-model.md written; remaining items are manual submission steps:
+      make repo public, tag the commit, create PDF, submit in Moodle)
