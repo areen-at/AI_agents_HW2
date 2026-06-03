@@ -179,39 +179,39 @@
 ## Phase 2 — Security primitives
 
 ### 2.1 Sanitizer (`security/sanitizer.py`) — prompt-injection containment
-- [ ] Wrap untrusted text as **quoted data, never instructions**
-- [ ] Strip/escape known injection markers ("ignore previous instructions", system-y text)
-- [ ] Enforce max length cap (config)
-- [ ] Add an explicit "the following is untrusted external content" framing helper
-- [ ] **Tests** `tests/test_sanitizer_injection.py`:
-  - [ ] "ignore previous instructions…" payload is neutralized/quoted
-  - [ ] overly long content is truncated
-  - [ ] benign content passes through intact
+- [x] Wrap untrusted text as **quoted data, never instructions**
+- [x] Strip/escape known injection markers ("ignore previous instructions", system-y text)
+- [x] Enforce max length cap (config)
+- [x] Add an explicit "the following is untrusted external content" framing helper
+- [x] **Tests** `tests/test_sanitizer_injection.py`:
+  - [x] "ignore previous instructions…" payload is neutralized/quoted
+  - [x] overly long content is truncated
+  - [x] benign content passes through intact
 
 ### 2.2 Egress control (`security/egress.py`) — anti-SSRF
-- [ ] Domain **allowlist** from config
-- [ ] Enforce HTTPS / TLS verification
-- [ ] Block private/loopback/link-local IP ranges
-- [ ] Reject redirects to disallowed hosts
-- [ ] `validate_url(url) -> bool/raise`
-- [ ] **Tests** `tests/test_egress_allowlist.py`:
-  - [ ] off-allowlist domain rejected
-  - [ ] loopback/private IP rejected
-  - [ ] allowlisted https URL accepted
+- [x] Domain **allowlist** from config
+- [x] Enforce HTTPS / TLS verification
+- [x] Block private/loopback/link-local IP ranges
+- [x] Reject redirects to disallowed hosts
+- [x] `validate_url(url) -> bool/raise`
+- [x] **Tests** `tests/test_egress_allowlist.py`:
+  - [x] off-allowlist domain rejected
+  - [x] loopback/private IP rejected
+  - [x] allowlisted https URL accepted
 
 ### 2.3 Moderation (`security/moderation.py`)
-- [ ] Detect offensive language / cursing (configurable list/policy)
-- [ ] Enforce respectful-tone policy
-- [ ] Enforce per-turn **word cap** (from config)
-- [ ] `check_text(text) -> (ok, reason)`
-- [ ] **Tests** `tests/test_moderation.py`:
-  - [ ] cursing flagged
-  - [ ] over-word-limit flagged
-  - [ ] clean respectful text passes
+- [x] Detect offensive language / cursing (configurable list/policy)
+- [x] Enforce respectful-tone policy
+- [x] Enforce per-turn **word cap** (from config)
+- [x] `check_text(text) -> (ok, reason)`
+- [x] **Tests** `tests/test_moderation.py`:
+  - [x] cursing flagged
+  - [x] over-word-limit flagged
+  - [x] clean respectful text passes
 
 ### 2.4 Phase 2 exit gate
-- [ ] **G-ALL** clean
-- [ ] Commit: "phase 2: security primitives (sanitizer, egress, moderation)"
+- [x] **G-ALL** clean
+- [x] Commit: "phase 2: security primitives (sanitizer, egress, moderation)"
 
 ---
 
@@ -566,7 +566,7 @@
 
 - [x] Phase 0 — Bootstrap & safety rails
 - [x] Phase 1 — Cross-cutting services
-- [ ] Phase 2 — Security primitives
+- [x] Phase 2 — Security primitives
 - [ ] Phase 3 — LLM provider layer
 - [ ] Phase 4 — Web search tool
 - [ ] Phase 5 — Agent hierarchy
