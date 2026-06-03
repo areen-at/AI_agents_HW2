@@ -342,47 +342,47 @@
 ## Phase 6 — Orchestration
 
 ### 6.1 Router (`orchestration/router.py`)
-- [ ] Enforce **Child → Father → Child**: every debater message goes through judge
-- [ ] No direct Pro↔Con path exists in the API
-- [ ] Judge may inspect/relay/intervene before forwarding
+- [x] Enforce **Child → Father → Child**: every debater message goes through judge
+- [x] No direct Pro↔Con path exists in the API
+- [x] Judge may inspect/relay/intervene before forwarding
 
 ### 6.2 Round execution (`orchestration/round.py`)
-- [ ] Execute one exchange (argument → relay → counterargument)
-- [ ] Guarantee **mutual response**: feed opponent's last relayed message
-- [ ] Link `rebuts_message_id` on each rebuttal
-- [ ] Trigger judge intervention when over-agreement detected
+- [x] Execute one exchange (argument → relay → counterargument)
+- [x] Guarantee **mutual response**: feed opponent's last relayed message
+- [x] Link `rebuts_message_id` on each rebuttal
+- [x] Trigger judge intervention when over-agreement detected
 
 ### 6.3 Transcript (`orchestration/transcript.py`)
-- [ ] Accumulate all messages (ordered)
-- [ ] Persist full JSON transcript via FIFO logger
-- [ ] Provide human-readable export
+- [x] Accumulate all messages (ordered)
+- [x] Persist full JSON transcript via FIFO logger
+- [x] Provide human-readable export
 
 ### 6.4 Engine (`orchestration/engine.py`)
-- [ ] Thin coordinator: build Judge + Pro + Con from config
-- [ ] Loop `rounds_per_side` exchanges (default 10; 5 allowed/disclosed)
-- [ ] End with `judge.verdict()` → decisive winner
-- [ ] Wire watchdog around each turn
+- [x] Thin coordinator: build Judge + Pro + Con from config
+- [x] Loop `rounds_per_side` exchanges (default 10; 5 allowed/disclosed)
+- [x] End with `judge.verdict()` → decisive winner
+- [x] Wire watchdog around each turn
 
 ### 6.5 Watchdog (`orchestration/watchdog.py`)
-- [ ] Keep-alive per agent turn
-- [ ] On timeout/crash → **kill & restart** the agent (bounded `max_restarts`)
-- [ ] Log every restart
-- [ ] Surface unrecoverable failure cleanly
+- [x] Keep-alive per agent turn
+- [x] On timeout/crash → **kill & restart** the agent (bounded `max_restarts`)
+- [x] Log every restart
+- [x] Surface unrecoverable failure cleanly
 
 ### 6.6 Tests
-- [ ] `tests/test_engine_routing.py`:
-  - [ ] no direct Pro↔Con traffic (all via judge)
-  - [ ] rebuttals link the correct prior message
-  - [ ] exactly `rounds_per_side` exchanges per side
-  - [ ] verdict is decisive (no tie)
-- [ ] `tests/test_watchdog.py`:
-  - [ ] hung MockLLM turn is timed out, killed, restarted
-  - [ ] run recovers and completes
+- [x] `tests/test_engine_routing.py`:
+  - [x] no direct Pro↔Con traffic (all via judge)
+  - [x] rebuttals link the correct prior message
+  - [x] exactly `rounds_per_side` exchanges per side
+  - [x] verdict is decisive (no tie)
+- [x] `tests/test_watchdog.py`:
+  - [x] hung MockLLM turn is timed out, killed, restarted
+  - [x] run recovers and completes
 
 ### 6.7 Phase 6 exit gate
-- [ ] **G-ALL** clean
-- [ ] Full debate runs end-to-end on MockLLM
-- [ ] Commit: "phase 6: orchestration (router/round/transcript/engine/watchdog)"
+- [x] **G-ALL** clean
+- [x] Full debate runs end-to-end on MockLLM
+- [x] Commit: "phase 6: orchestration (router/round/transcript/engine/watchdog)"
 
 ---
 
@@ -570,7 +570,7 @@
 - [x] Phase 3 — LLM provider layer
 - [x] Phase 4 — Web search tool (live smoke test deferred to Phase 8)
 - [x] Phase 5 — Agent hierarchy
-- [ ] Phase 6 — Orchestration
+- [x] Phase 6 — Orchestration
 - [ ] Phase 7 — SDK & interface
 - [ ] Phase 8 — Hardening, real run, audit
 - [ ] Phase 9 — Documentation & submission
