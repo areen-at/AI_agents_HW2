@@ -10,7 +10,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-Provider = Literal["anthropic", "openai", "mock"]
+Provider = Literal["anthropic", "openai", "groq", "mock"]
 
 
 class _Strict(BaseModel):

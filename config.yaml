@@ -5,15 +5,16 @@
 # ============================================================
 
 llm:
-  provider: anthropic            # anthropic | openai | mock
-  judge_model: claude-opus-4-8       # judge may use a stronger model
-  debater_model: claude-sonnet-4-6
+  provider: groq                 # anthropic | openai | groq | mock
+  judge_model: llama-3.3-70b-versatile   # judge uses the stronger model
+  debater_model: llama-3.1-8b-instant    # debaters: fast + cheap
   temperature: 0.8               # debaters: more creative
   judge_temperature: 0.2         # judge: more deterministic
   max_tokens: 800
-  # USD cost per 1M tokens, used by the gatekeeper for estimates.
-  cost_per_mtok_input: 3.0
-  cost_per_mtok_output: 15.0
+  # USD cost per 1M tokens, used by the gatekeeper for estimates
+  # (Groq llama-3.3-70b rates — conservative upper bound).
+  cost_per_mtok_input: 0.59
+  cost_per_mtok_output: 0.79
 
 debate:
   topic: "Which is better: Barcelona or Real Madrid?"

@@ -15,7 +15,11 @@ from .base import LLMProvider
 from .mock import MockLLM
 from .resilience import ResilientProvider
 
-_KEY_ENV = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
+_KEY_ENV = {
+    "anthropic": "ANTHROPIC_API_KEY",
+    "openai": "OPENAI_API_KEY",
+    "groq": "GROQ_API_KEY",
+}
 
 
 def build_provider(
@@ -49,6 +53,10 @@ def _raw_provider(config: Config, model: str) -> LLMProvider:
         from .anthropic import AnthropicProvider
 
         return AnthropicProvider(api_key=api_key, model=model, request_seconds=request_seconds)
+    if provider == "groq":
+        from .groq import GroqProvider
+
+        return GroqProvider(api_key=api_key, model=model, request_seconds=request_seconds)
     from .openai import OpenAIProvider
 
     return OpenAIProvider(api_key=api_key, model=model, request_seconds=request_seconds)

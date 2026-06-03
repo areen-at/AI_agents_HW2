@@ -18,6 +18,8 @@ _PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"(?i)(bearer\s+)[A-Za-z0-9._\-]{8,}"),
     # Provider-style keys: sk-..., sk-ant-..., pk-..., tvly-...
     re.compile(r"\b((?:sk|pk|tvly|rk)-(?:ant-)?)[A-Za-z0-9._\-]{6,}"),
+    # Groq keys: gsk_<base62>
+    re.compile(r"\b(gsk_)[A-Za-z0-9]{16,}"),
     # key=value / "api_key": "value" style assignments.
     re.compile(
         r"(?i)((?:api[_-]?key|secret|token|password)['\"]?\s*[:=]\s*['\"]?)"

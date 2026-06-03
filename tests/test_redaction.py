@@ -11,6 +11,12 @@ def test_masks_provider_key() -> None:
     assert MASK in out
 
 
+def test_masks_groq_key() -> None:
+    out = redact("GROQ_API_KEY=gsk_ABCDEFGHIJ1234567890xyz now")
+    assert "ABCDEFGHIJ1234567890xyz" not in out
+    assert MASK in out
+
+
 def test_masks_bearer_token() -> None:
     out = redact("Authorization: Bearer abcdef123456TOKEN")
     assert "abcdef123456TOKEN" not in out
