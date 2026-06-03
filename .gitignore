@@ -1,14 +1,78 @@
 # ============================================================
 #  SECRETS — never commit. Only .env.example is tracked.
+#  Defense in depth: block by name, extension, and directory.
 # ============================================================
+# dotenv files (all variants), but keep the tracked templates
 .env
 .env.*
+*.env
+.envrc
 !.env.example
+!.env.sample
+!.env.template
+
+# private keys, certificates, keystores
 *.pem
 *.key
+*.keystore
+*.jks
 *.p12
+*.pfx
+*.cer
+*.crt
+*.der
+*.csr
+*.asc
+*.gpg
+*.pgp
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*_rsa
+*_dsa
+*.ppk
+
+# generic credential / secret files and folders
 secrets/
+secret/
+.secrets/
+*secret*.json
+*secret*.yaml
+*secret*.yml
+credentials
 credentials.json
+credentials.yaml
+*credentials*.json
+*.credentials
+.netrc
+.pgpass
+.htpasswd
+auth.json
+token.json
+*.token
+apikey*
+api_key*
+service-account*.json
+serviceaccount*.json
+
+# cloud / infra provider state & creds
+.aws/
+aws.json
+.azure/
+.gcloud/
+gcloud-*.json
+.kube/
+kubeconfig
+*.kubeconfig
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.vault-token
+
+# git credential helper artifact (was present in home dir)
 .gcm-connection.properties
 
 # ============================================================
@@ -63,11 +127,33 @@ transcripts/
 *.tmp
 
 # ============================================================
-#  Security tooling reports
+#  Backups, archives & database dumps (frequent leak vectors)
+# ============================================================
+*.bak
+*.backup
+*.old
+*.orig
+*.swp
+*.dump
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# ============================================================
+#  Security tooling reports (may embed scanned secrets)
 # ============================================================
 bandit-report.*
 pip-audit-report.*
 gitleaks-report.*
+*.sarif
+trivy-report.*
 
 # ============================================================
 #  IDE / editor
