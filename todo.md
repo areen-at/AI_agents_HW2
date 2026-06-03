@@ -285,57 +285,57 @@
 ## Phase 5 — Agent hierarchy (OOP core)
 
 ### 5.1 Prompts as assets (`prompts/`)
-- [ ] `prompts/loader.py`: load a template by name
-- [ ] `prompts/pro.md`: Pro persona + **distinct skill A** (e.g., data/evidence persuader)
-- [ ] `prompts/con.md`: Con persona + **distinct skill B** (e.g., emotional/rhetorical)
-- [ ] `prompts/judge.md`: **topic-blind** judge; rules of rhetoric; persuasion-not-truth;
+- [x] `prompts/loader.py`: load a template by name (+ `render_prompt` for skill injection)
+- [x] `prompts/pro.md`: Pro persona + **distinct skill A** (e.g., data/evidence persuader)
+- [x] `prompts/con.md`: Con persona + **distinct skill B** (e.g., emotional/rhetorical)
+- [x] `prompts/judge.md`: **topic-blind** judge; rules of rhetoric; persuasion-not-truth;
       no-tie mandate; anti-agreement duty
-- [ ] Ensure Pro/Con prompts explicitly resist people-pleasing / never fully concede
+- [x] Ensure Pro/Con prompts explicitly resist people-pleasing / never fully concede
 
 ### 5.2 BaseAgent (`agents/base.py`)
-- [ ] Abstract base: holds `llm`, `logger`, `config`, `agent_id`, `role`
-- [ ] `send()` builds JSON envelope → calls LLM (resilient/gatekept) → logs (redacted) →
+- [x] Abstract base: holds `llm`, `logger`, `config`, `agent_id`, `role`
+- [x] `send()` builds JSON envelope → calls LLM (resilient/gatekept) → logs (redacted) →
       returns `Message`
-- [ ] Abstract `system_prompt()` and `build_prompt()`
-- [ ] All shared agent logic lives here (no duplication downstream)
-- [ ] **Tests** `tests/test_agents_base.py`:
-  - [ ] produces a valid JSON envelope (MockLLM)
-  - [ ] logs are redacted
+- [x] Abstract `system_prompt()` and `build_prompt()`
+- [x] All shared agent logic lives here (no duplication downstream)
+- [x] **Tests** `tests/test_agents_base.py`:
+  - [x] produces a valid JSON envelope (MockLLM)
+  - [x] logs are redacted
 
 ### 5.3 DebaterAgent (`agents/debater.py`)
-- [ ] Abstract: adds `position`, `skill`, `web` tool
-- [ ] `argue(context)` — opening / positional argument
-- [ ] `rebut(opponent_msg)` — references opponent's last message id
-- [ ] `research(query)` — calls web search, attaches citations
-- [ ] Enforces **word cap** + **moderation** before returning
-- [ ] Injects persona/skill into system prompt (real opposition)
-- [ ] **Tests** `tests/test_debater.py`:
-  - [ ] enforces word cap
-  - [ ] rebuttal links opponent `rebuts_message_id`
-  - [ ] research attaches sanitized citations
+- [x] Abstract: adds `position`, `skill`, `web` tool
+- [x] `argue(context)` — opening / positional argument
+- [x] `rebut(opponent_msg)` — references opponent's last message id
+- [x] `research(query)` — calls web search, attaches citations
+- [x] Enforces **word cap** + **moderation** before returning
+- [x] Injects persona/skill into system prompt (real opposition)
+- [x] **Tests** `tests/test_debater.py`:
+  - [x] enforces word cap
+  - [x] rebuttal links opponent `rebuts_message_id`
+  - [x] research attaches sanitized citations
 
-### 5.4 Pro & Con (`agents/pro.py`, `agents/con.py`)
-- [ ] `ProAgent`: position=PRO, skill A; differs ONLY by position + skill
-- [ ] `ConAgent`: position=CON, skill B; differs ONLY by position + skill
-- [ ] Verify no duplicated logic vs. `DebaterAgent`
+### 5.4 Pro & Con (`agents/pro.py`, `agents/con_agent.py` — `con` is a Windows reserved name)
+- [x] `ProAgent`: position=PRO, skill A; differs ONLY by position + skill
+- [x] `ConAgent`: position=CON, skill B; differs ONLY by position + skill
+- [x] Verify no duplicated logic vs. `DebaterAgent`
 
 ### 5.5 JudgeAgent (`agents/judge.py`)
-- [ ] **Topic-blind** system prompt (transcript + rhetoric rules only)
-- [ ] `relay(msg)` — pass a debater message toward the opponent
-- [ ] `intervene(reason)` — anti-agreement reminder of role
-- [ ] `verdict(transcript) -> Verdict`:
-  - [ ] strict-inequality scoring (no tie)
-  - [ ] code-level tie-break / re-query if model returns equal
-  - [ ] rationale grounded in **persuasiveness**, not truth
-- [ ] **Tests** `tests/test_judge_intervention.py`:
-  - [ ] fires on canned "I totally agree with you" message
-- [ ] **Tests** (verdict no-tie already in Phase 1 model test) — add agent-level:
-  - [ ] forced equal-score MockLLM → tie-break yields a strict winner
+- [x] **Topic-blind** system prompt (transcript + rhetoric rules only)
+- [x] `relay(msg)` — pass a debater message toward the opponent
+- [x] `intervene(reason)` — anti-agreement reminder of role
+- [x] `verdict(transcript) -> Verdict`:
+  - [x] strict-inequality scoring (no tie)
+  - [x] code-level tie-break / re-query if model returns equal
+  - [x] rationale grounded in **persuasiveness**, not truth
+- [x] **Tests** `tests/test_judge_intervention.py`:
+  - [x] fires on canned "I totally agree with you" message
+- [x] **Tests** (verdict no-tie already in Phase 1 model test) — add agent-level:
+  - [x] forced equal-score MockLLM → tie-break yields a strict winner
 
 ### 5.6 Phase 5 exit gate
-- [ ] **G-ALL** clean
-- [ ] Manual review: zero duplicated logic across agents
-- [ ] Commit: "phase 5: agent hierarchy (base/debater/pro/con/judge) + prompts"
+- [x] **G-ALL** clean
+- [x] Manual review: zero duplicated logic across agents
+- [x] Commit: "phase 5: agent hierarchy (base/debater/pro/con/judge) + prompts"
 
 ---
 
@@ -569,7 +569,7 @@
 - [x] Phase 2 — Security primitives
 - [x] Phase 3 — LLM provider layer
 - [x] Phase 4 — Web search tool (live smoke test deferred to Phase 8)
-- [ ] Phase 5 — Agent hierarchy
+- [x] Phase 5 — Agent hierarchy
 - [ ] Phase 6 — Orchestration
 - [ ] Phase 7 — SDK & interface
 - [ ] Phase 8 — Hardening, real run, audit
