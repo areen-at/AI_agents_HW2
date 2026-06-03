@@ -1,0 +1,21 @@
+LIVE WEB-SEARCH SMOKE TEST — STATUS: NOT RUN (no provider key available)
+========================================================================
+
+The hardened WebSearchTool (src/debate/tools/web_search.py) is fully
+implemented and unit-tested with mocked HTTP (tests/test_web_search.py — all
+green): it routes every request through the egress allowlist (anti-SSRF + HTTPS),
+counts the call with the gatekeeper, bounds it with a timeout, and runs every
+returned snippet through the sanitizer before an agent can see it.
+
+A *live* smoke test against the real Tavily API could NOT be executed in this
+environment because no SEARCH_API_KEY (Tavily) is present in .env — only
+GROQ_API_KEY is configured. Re-run once a key is available:
+
+    # add SEARCH_API_KEY=<tavily key> to .env, then:
+    python scripts/smoke_web_search.py "Barcelona vs Real Madrid Champions League titles"
+
+Note (orchestration): the debate loop (orchestration/round.py) currently calls
+only argue()/rebut(); it does not invoke DebaterAgent.research(), so web search
+is exercised via the standalone tool/smoke path and its unit tests, not from
+inside a debate run. Wiring research() into each turn is a follow-up design
+decision (it multiplies API calls and search-provider rate pressure).

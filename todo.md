@@ -389,77 +389,77 @@
 ## Phase 7 — SDK & interface layers
 
 ### 7.1 SDK (`sdk.py`)
-- [ ] `DebateSDK.run_debate(topic=None, rounds=None) -> DebateResult`
-- [ ] Accessors: `.transcript`, `.verdict`
-- [ ] Interface-agnostic (no print/menu logic here)
-- [ ] Usable in ~5 lines of Python (self-debug entry point)
-- [ ] **Tests** `tests/test_sdk.py`:
-  - [ ] full MockLLM debate → decisive verdict + correct exchange count
+- [x] `DebateSDK.run_debate(topic=None, rounds=None) -> DebateResult`
+- [x] Accessors: `.transcript`, `.verdict`
+- [x] Interface-agnostic (no print/menu logic here)
+- [x] Usable in ~5 lines of Python (self-debug entry point)
+- [x] **Tests** `tests/test_sdk.py`:
+  - [x] full MockLLM debate → decisive verdict + correct exchange count
 
 ### 7.2 Terminal menu (`ui/menu.py`, `ui/actions.py`)
-- [ ] `ui/menu.py`: render keyboard menu loop
-  - [ ] `[1] Configure topic/rounds`
-  - [ ] `[2] Run debate (live print)`
-  - [ ] `[3] View last transcript`
-  - [ ] `[4] View verdict`
-  - [ ] `[5] Settings`
-  - [ ] `[0] Exit`
-- [ ] `ui/actions.py`: action handlers → call `DebateSDK` only (no business logic)
-- [ ] Input validation on menu selections
-- [ ] **Tests**: menu smoke-tested with scripted stdin
+- [x] `ui/menu.py`: render keyboard menu loop
+  - [x] `[1] Configure topic/rounds`
+  - [x] `[2] Run debate (live print)`
+  - [x] `[3] View last transcript`
+  - [x] `[4] View verdict`
+  - [x] `[5] Settings`
+  - [x] `[0] Exit`
+- [x] `ui/actions.py`: action handlers → call `DebateSDK` only (no business logic)
+- [x] Input validation on menu selections
+- [x] **Tests**: menu smoke-tested with scripted stdin
 
 ### 7.3 Entry point
-- [ ] `__main__.py` launches the menu
-- [ ] `uv run python -m debate` → working menu
+- [x] `__main__.py` launches the menu
+- [x] `uv run python -m debate` → working menu
 
 ### 7.4 Phase 7 exit gate
-- [ ] **G-ALL** clean
-- [ ] Both run paths verified (menu + SDK)
-- [ ] Commit: "phase 7: SDK + terminal menu"
+- [x] **G-ALL** clean
+- [x] Both run paths verified (menu + SDK)
+- [x] Commit: "phase 7: SDK + terminal menu interface"
 
 ---
 
 ## Phase 8 — Hardening, real run, audit
 
 ### 8.1 Real wiring
-- [ ] Configure real LLM provider + key in `.env` (local only)
-- [ ] Configure real web-search provider + egress allowlist
-- [ ] Choose session-1 topic (e.g., Barcelona vs. Real Madrid)
+- [x] Configure real LLM provider + key in `.env` (local only)
+- [~] Configure real web-search provider + egress allowlist (configured; no SEARCH_API_KEY present)
+- [x] Choose session-1 topic (e.g., Barcelona vs. Real Madrid)
 
 ### 8.2 Real debate run (session 1)
-- [ ] Run a full debate (10 rounds/side, or 5 with disclosure)
-- [ ] Save full **JSON transcript**
-- [ ] Save **human-readable transcript**
-- [ ] Save the **verdict** (winner + differential scores + rationale)
+- [x] Run a full debate (10 rounds/side, or 5 with disclosure)
+- [x] Save full **JSON transcript**
+- [x] Save **human-readable transcript**
+- [x] Save the **verdict** (winner + differential scores + rationale)
 
 ### 8.3 Evidence capture (for README)
-- [ ] Screenshot: terminal menu
-- [ ] Screenshot: debate running (live)
-- [ ] Screenshot: verdict screen
+- [!] Screenshot: terminal menu  (manual capture pending)
+- [!] Screenshot: debate running (live)  (manual capture pending)
+- [!] Screenshot: verdict screen  (manual capture pending)
 - [ ] (Optional GUI) screenshots if a GUI is built
 
 ### 8.4 Engineering-feature demonstrations
-- [ ] Demonstrate **gatekeeper block** (lower a limit, show halt) + capture
-- [ ] Demonstrate **watchdog restart** (inject a hang) + capture
-- [ ] Demonstrate **timeout handling** + capture
-- [ ] Demonstrate **prompt-injection containment** (planted payload neutralized) + capture
-- [ ] Demonstrate **judge intervention** on over-agreement + capture
+- [x] Demonstrate **gatekeeper block** (lower a limit, show halt) + capture
+- [x] Demonstrate **watchdog restart** (inject a hang) + capture
+- [x] Demonstrate **timeout handling** + capture
+- [x] Demonstrate **prompt-injection containment** (planted payload neutralized) + capture
+- [x] Demonstrate **judge intervention** on over-agreement + capture
 
 ### 8.5 Security audit
-- [ ] `bandit` clean (or all findings triaged/justified)
-- [ ] `pip-audit` clean (or CVEs accepted with rationale)
-- [ ] `gitleaks` clean
-- [ ] Scan FULL git history → confirm `.env`/keys never committed
-- [ ] Confirm only `.env.example` is tracked
+- [x] `bandit` clean (or all findings triaged/justified)
+- [x] `pip-audit` clean (or CVEs accepted with rationale)
+- [~] `gitleaks` clean (binary not installed locally; pinned in pre-commit + manual history scan clean)
+- [x] Scan FULL git history → confirm `.env`/keys never committed
+- [x] Confirm only `.env.example` is tracked
 
 ### 8.6 Coverage & quality
-- [ ] Raise coverage on core + security paths to target
-- [ ] `ruff` + `ruff format` final pass
-- [ ] **G-LEN** final pass across whole repo
+- [x] Raise coverage on core + security paths to target
+- [x] `ruff` + `ruff format` final pass
+- [x] **G-LEN** final pass across whole repo
 
 ### 8.7 Phase 8 exit gate
-- [ ] **G-ALL** clean + all demos captured
-- [ ] Commit: "phase 8: real session, demos, security audit"
+- [~] **G-ALL** clean + demos captured (screenshots + live web search pending)
+- [x] Commit: "phase 8: real session, demos, security audit"
 
 ---
 
@@ -555,9 +555,9 @@
 ## Open decisions to resolve (gating Phase 3)
 
 - [x] D-1 LLM backend: Anthropic (default) / OpenAI / both behind abstraction
-- [ ] D-2 Session-1 topic
-- [ ] D-3 Web-search provider + its egress allowlist
-- [ ] D-4 Rounds: 10 (full) or 5 (budget — disclose in README)
+- [x] D-2 Session-1 topic: Barcelona vs. Real Madrid
+- [~] D-3 Web-search provider: Tavily (api.tavily.com allowlist); no key provided yet
+- [x] D-4 Rounds: 5 (budget mode — disclosed in docs/sessions/session-01/SUMMARY.md)
 - [x] D-5 Config format: YAML (assumed) vs. TOML
 
 ---
@@ -571,6 +571,7 @@
 - [x] Phase 4 — Web search tool (live smoke test deferred to Phase 8)
 - [x] Phase 5 — Agent hierarchy
 - [x] Phase 6 — Orchestration
-- [ ] Phase 7 — SDK & interface
-- [ ] Phase 8 — Hardening, real run, audit
+- [x] Phase 7 — SDK & interface
+- [~] Phase 8 — Hardening, real run, audit (live run + demos + audit done;
+      screenshots and live web-search smoke test pending — see notes)
 - [ ] Phase 9 — Documentation & submission

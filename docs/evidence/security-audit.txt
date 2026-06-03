@@ -1,0 +1,25 @@
+PHASE 8 SECURITY AUDIT — 2026-06-03T17:34:54Z
+============================================================
+
+## SAST — bandit -r src
+   -> exit 0 (0 = clean, no findings)
+
+## Dependency CVEs — pip-audit
+No known vulnerabilities found
+
+## Secrets in git — gitleaks
+   gitleaks binary not installed locally (pinned in .pre-commit-config.yaml).
+   Fallback manual history scan performed (below).
+
+## .env never committed (history scan)
+   files matching .env ever added to history:
+   (none)
+   tracked dotenv files now:
+     .env.example
+
+## Real-key pattern scan across full history (sk-/gsk_/tvly-/Bearer)
+   matches (expected: only redaction patterns + fake test fixtures):
+1966:+    planted = "sk-ant-SUPERSECRETVALUE123456"
+
+## Line-length gate
+OK: all .py files are within 150 lines.
