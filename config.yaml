@@ -1,0 +1,57 @@
+# ============================================================
+#  Debate system configuration — single source of truth.
+#  No parameter is hardcoded in Python; everything lives here.
+#  Secrets are NEVER stored here — see .env / .env.example.
+# ============================================================
+
+llm:
+  provider: anthropic            # anthropic | openai | mock
+  judge_model: claude-opus-4-8       # judge may use a stronger model
+  debater_model: claude-sonnet-4-6
+  temperature: 0.8               # debaters: more creative
+  judge_temperature: 0.2         # judge: more deterministic
+  max_tokens: 800
+  # USD cost per 1M tokens, used by the gatekeeper for estimates.
+  cost_per_mtok_input: 3.0
+  cost_per_mtok_output: 15.0
+
+debate:
+  topic: "Which is better: Barcelona or Real Madrid?"
+  rounds_per_side: 10            # may set to 5 (disclose in README)
+  max_words_per_turn: 150
+  pro_skill: "evidence-and-data persuader"
+  con_skill: "emotional-and-rhetorical persuader"
+
+timeouts:
+  request_seconds: 60
+  retries: 2
+  backoff_seconds: 2
+  circuit_breaker_threshold: 3   # consecutive failures before opening
+
+watchdog:
+  keepalive_seconds: 15
+  max_restarts: 3
+
+gatekeeper:
+  max_total_calls: 80
+  max_total_usd: 2.00
+  max_tokens_total: 200000
+
+search:
+  provider: tavily               # web search backend
+  max_results: 3
+  request_seconds: 20
+  # Anti-SSRF egress allowlist — only these hosts may be contacted.
+  allowed_domains:
+    - "api.tavily.com"
+
+logging:
+  dir: ./logs
+  fifo_max_files: 20
+  fifo_max_lines_per_file: 500
+  level: INFO
+
+security:
+  max_external_content_chars: 4000   # sanitizer truncation cap
+  enable_moderation: true
+  banned_terms_file: null            # optional path to a custom list
