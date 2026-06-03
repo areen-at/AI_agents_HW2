@@ -14,8 +14,16 @@ GROQ_API_KEY is configured. Re-run once a key is available:
     # add SEARCH_API_KEY=<tavily key> to .env, then:
     python scripts/smoke_web_search.py "Barcelona vs Real Madrid Champions League titles"
 
-Note (orchestration): the debate loop (orchestration/round.py) currently calls
-only argue()/rebut(); it does not invoke DebaterAgent.research(), so web search
-is exercised via the standalone tool/smoke path and its unit tests, not from
-inside a debate run. Wiring research() into each turn is a follow-up design
-decision (it multiplies API calls and search-provider rate pressure).
+Note (orchestration): research() is now wired into the debate loop. Before each
+turn, orchestration/round.py issues ONE web-research call using a stable per-side
+query ("<topic> <pro|con> arguments") and attaches the citations to that turn.
+The WebSearchTool memoises identical queries (search.cache: true), so a whole
+debate makes at most one live request per side regardless of round count — and a
+cache hit is never charged to the gatekeeper. With no web tool (mock provider or
+missing key) research() is a no-op returning no citations, so mock runs are
+unaffected. Covered by tests/test_engine_routing.py (wiring + per-side stability)
+and tests/test_web_search_cache.py (cache behaviour).
+
+The historical session-01 (docs/sessions/session-01) predates a Tavily key and
+therefore shows no citations; re-run the capture with SEARCH_API_KEY set to see
+citations populate the transcript.

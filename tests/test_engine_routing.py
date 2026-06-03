@@ -15,18 +15,32 @@ from debate.config.schema import Config
 from debate.llm.mock import MockLLM
 from debate.orchestration.engine import DebateResult, Engine
 from debate.protocol.message import MessageType, Party
+from debate.tools.citations import Citation as ToolCitation
 
 _VERDICT = '{"winner": "pro", "scores": {"pro": 61, "con": 40}, "rationale": "Pro led."}'
 
 
-def _engine(valid_config_dict: dict, *, rounds: int) -> Engine:
+class _RecordingWeb:
+    """Web tool stub that records every query and returns one citation."""
+
+    def __init__(self) -> None:
+        self.queries: list[str] = []
+
+    def search(self, query: str) -> list[ToolCitation]:
+        self.queries.append(query)
+        return [ToolCitation(title="Src", url="https://x.test/9", snippet="safe data")]
+
+
+def _engine(
+    valid_config_dict: dict, *, rounds: int, pro_web: object = None, con_web: object = None
+) -> Engine:
     data = {
         **valid_config_dict,
         "debate": {**valid_config_dict["debate"], "rounds_per_side": rounds},
     }
     config = Config.model_validate(data)
-    pro = ProAgent(llm=MockLLM(), config=config)
-    con = ConAgent(llm=MockLLM(), config=config)
+    pro = ProAgent(llm=MockLLM(), config=config, web=pro_web)
+    con = ConAgent(llm=MockLLM(), config=config, web=con_web)
     judge = JudgeAgent(llm=MockLLM([_VERDICT]), config=config)
     return Engine(judge=judge, pro=pro, con=con, config=config)
 
@@ -82,6 +96,41 @@ def test_verdict_is_decisive(valid_config_dict: dict) -> None:
     result = _run(valid_config_dict)
     assert result.verdict.winner is Party.PRO
     assert result.verdict.scores.pro != result.verdict.scores.con
+
+
+def test_research_runs_per_side_and_attaches_citations(valid_config_dict: dict) -> None:
+    pro_web, con_web = _RecordingWeb(), _RecordingWeb()
+    engine = _engine(valid_config_dict, rounds=2, pro_web=pro_web, con_web=con_web)
+    result = engine.run()
+
+    # One research query per debater turn (2 turns/side at rounds=2)...
+    assert len(pro_web.queries) == 2
+    assert len(con_web.queries) == 2
+    # ...and the per-side query is stable, so the tool cache would collapse it
+    # to a single live call per side.
+    assert len(set(pro_web.queries)) == 1
+    assert "pro" in pro_web.queries[0] and "con" in con_web.queries[0]
+
+    debater_turns = [
+        m
+        for m in result.transcript.messages
+        if m.sender in (Party.PRO, Party.CON)
+        and m.type in (MessageType.ARGUMENT, MessageType.REBUTTAL)
+    ]
+    assert debater_turns
+    assert all(m.payload.citations for m in debater_turns)
+    assert debater_turns[0].payload.citations[0].url == "https://x.test/9"
+
+
+def test_no_web_tool_means_no_citations(valid_config_dict: dict) -> None:
+    result = _run(valid_config_dict, rounds=2)
+    debater_turns = [
+        m
+        for m in result.transcript.messages
+        if m.sender in (Party.PRO, Party.CON)
+        and m.type in (MessageType.ARGUMENT, MessageType.REBUTTAL)
+    ]
+    assert all(m.payload.citations == [] for m in debater_turns)
 
 
 def test_transcript_exports_json_and_text(valid_config_dict: dict) -> None:

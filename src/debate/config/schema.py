@@ -61,6 +61,7 @@ class SearchConfig(_Strict):
     max_results: int = Field(gt=0)
     request_seconds: float = Field(gt=0)
     allowed_domains: list[str] = Field(min_length=1)
+    cache: bool = True  # memoise identical queries to curb repeat API spend
 
 
 class LoggingConfig(_Strict):

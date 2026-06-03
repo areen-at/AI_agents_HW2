@@ -513,7 +513,8 @@
       opponent's prior message (mutual response verifiable in JSON)
 - [ ] AC-4 Judge produces a decisive verdict (differential scores + rationale); no tie ever
 - [ ] AC-5 Judge intervenes on over-agreement (demonstrable via forced scenario)
-- [ ] AC-6 Web search tool invoked; citations appear in the log
+- [~] AC-6 Web search tool wired into the loop (round.py research per side, cached) +
+      citations attach to turns — mock/stub-tested; live run pending a Tavily key
 - [ ] AC-7 All inter-agent traffic is JSON and persisted; logs use FIFO rotation
 - [ ] AC-8 Timeouts + watchdog recover from a hung/crashed agent
 - [ ] AC-9 Gatekeeper halts the run at a configured limit
@@ -556,7 +557,8 @@
 
 - [x] D-1 LLM backend: Anthropic (default) / OpenAI / both behind abstraction
 - [x] D-2 Session-1 topic: Barcelona vs. Real Madrid
-- [~] D-3 Web-search provider: Tavily (api.tavily.com allowlist); no key provided yet
+- [~] D-3 Web-search provider: Tavily (api.tavily.com allowlist); research() now wired
+      into the debate loop (1 cached call/side) — mock/stub-tested; live needs a key
 - [x] D-4 Rounds: 5 (budget mode — disclosed in docs/sessions/session-01/SUMMARY.md)
 - [x] D-5 Config format: YAML (assumed) vs. TOML
 

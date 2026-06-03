@@ -56,4 +56,5 @@ def build_web(config: Config, gatekeeper: Gatekeeper, logger: object) -> WebSear
         max_content_chars=config.security.max_external_content_chars,
         gatekeeper=gatekeeper,
         logger=logger,
+        enable_cache=s.cache,
     )

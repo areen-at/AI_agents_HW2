@@ -45,6 +45,7 @@ search:
   provider: tavily               # web search backend
   max_results: 3
   request_seconds: 20
+  cache: true                    # memoise identical queries (1 live call/side per debate)
   # Anti-SSRF egress allowlist — only these hosts may be contacted.
   allowed_domains:
     - "api.tavily.com"
