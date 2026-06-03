@@ -255,30 +255,30 @@
 ## Phase 4 — Web search tool (mandatory)
 
 ### 4.1 Citation model (`tools/citations.py`)
-- [ ] `Citation` model: title, url, snippet
-- [ ] Parser from raw provider response → `list[Citation]`
+- [x] `Citation` model: title, url, snippet
+- [x] Parser from raw provider response → `list[Citation]`
 
 ### 4.2 Web search tool (`tools/web_search.py`)
-- [ ] `search(query) -> list[Citation]`
-- [ ] Route outbound through `security/egress.py`
-- [ ] Pass all results through `security/sanitizer.py`
-- [ ] Timeout + gatekeeper-aware
-- [ ] Graceful degradation: on failure return `[]` + log (debate continues)
-- [ ] Config: provider + `max_results`
+- [x] `search(query) -> list[Citation]`
+- [x] Route outbound through `security/egress.py`
+- [x] Pass all results through `security/sanitizer.py`
+- [x] Timeout + gatekeeper-aware
+- [x] Graceful degradation: on failure return `[]` + log (debate continues)
+- [x] Config: provider + `max_results`
 
 ### 4.3 Tests `tests/test_web_search.py`
-- [ ] mocked HTTP → parsed citations
-- [ ] failure path → `[]` + logged
-- [ ] all returned snippets are sanitized
-- [ ] off-allowlist host blocked before request
+- [x] mocked HTTP → parsed citations
+- [x] failure path → `[]` + logged
+- [x] all returned snippets are sanitized
+- [x] off-allowlist host blocked before request
 
 ### 4.4 Live smoke test (manual, documented)
 - [ ] One real query against the chosen provider
 - [ ] Capture output for README evidence
 
 ### 4.5 Phase 4 exit gate
-- [ ] **G-ALL** clean
-- [ ] Commit: "phase 4: hardened web search tool"
+- [x] **G-ALL** clean
+- [x] Commit: "phase 4: hardened web search tool"
 
 ---
 
@@ -568,7 +568,7 @@
 - [x] Phase 1 — Cross-cutting services
 - [x] Phase 2 — Security primitives
 - [x] Phase 3 — LLM provider layer
-- [ ] Phase 4 — Web search tool
+- [x] Phase 4 — Web search tool (live smoke test deferred to Phase 8)
 - [ ] Phase 5 — Agent hierarchy
 - [ ] Phase 6 — Orchestration
 - [ ] Phase 7 — SDK & interface
