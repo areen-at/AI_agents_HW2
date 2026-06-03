@@ -105,74 +105,74 @@
 ## Phase 1 — Cross-cutting services
 
 ### 1.1 Config loader (`config/`)
-- [ ] `config/schema.py`: typed pydantic models for each config section
-  - [ ] Validate ranges (e.g., rounds ≥ 1, usd > 0, files > 0)
-  - [ ] Reject unknown/missing required keys
-- [ ] `config/secrets.py`: resolve secrets from env
-  - [ ] `get_secret(name)` returns value or raises clear error (no value in message)
-  - [ ] Helper to mask a secret for safe display (`sk-...abcd`)
-- [ ] `config/loader.py`: load `config.yaml`, merge env, return typed config object
-  - [ ] Fail-fast on missing required secret
-  - [ ] Single public `load_config(path)` entry
-- [ ] **Tests** `tests/test_config.py`:
-  - [ ] loads a valid sample config
-  - [ ] rejects missing required key
-  - [ ] rejects out-of-range value
-  - [ ] missing secret raises WITHOUT leaking expected value
+- [x] `config/schema.py`: typed pydantic models for each config section
+  - [x] Validate ranges (e.g., rounds ≥ 1, usd > 0, files > 0)
+  - [x] Reject unknown/missing required keys
+- [x] `config/secrets.py`: resolve secrets from env
+  - [x] `get_secret(name)` returns value or raises clear error (no value in message)
+  - [x] Helper to mask a secret for safe display (`sk-...abcd`)
+- [x] `config/loader.py`: load `config.yaml`, merge env, return typed config object
+  - [x] Fail-fast on missing required secret
+  - [x] Single public `load_config(path)` entry
+- [x] **Tests** `tests/test_config.py`:
+  - [x] loads a valid sample config
+  - [x] rejects missing required key
+  - [x] rejects out-of-range value
+  - [x] missing secret raises WITHOUT leaking expected value
 
 ### 1.2 JSON protocol (`protocol/`)
-- [ ] `protocol/message.py`: `Message` envelope model (PRD §6)
-  - [ ] fields: schema_version, message_id, timestamp, from, to, type, round, payload, meta
-  - [ ] enum for `from`/`to` (pro|con|judge) and `type`
-  - [ ] payload validation (text, rebuts_message_id, citations, word_count)
-- [ ] `protocol/verdict.py`: `Verdict` model with **no-tie invariant**
-  - [ ] `winner` ∈ {pro, con}; never null, never "tie"
-  - [ ] `scores.pro != scores.con` enforced (validator raises on equality)
-  - [ ] rationale + highlights fields
-- [ ] `protocol/builder.py`: helpers to construct envelopes (id/timestamp generation)
-- [ ] **Tests** `tests/test_protocol_message.py`:
-  - [ ] round-trip serialize/deserialize
-  - [ ] invalid message rejected
-- [ ] **Tests** `tests/test_verdict_no_tie.py`:
-  - [ ] equal scores rejected at model level
-  - [ ] null/"tie" winner rejected
-  - [ ] valid differential verdict accepted
+- [x] `protocol/message.py`: `Message` envelope model (PRD §6)
+  - [x] fields: schema_version, message_id, timestamp, from, to, type, round, payload, meta
+  - [x] enum for `from`/`to` (pro|con|judge) and `type`
+  - [x] payload validation (text, rebuts_message_id, citations, word_count)
+- [x] `protocol/verdict.py`: `Verdict` model with **no-tie invariant**
+  - [x] `winner` ∈ {pro, con}; never null, never "tie"
+  - [x] `scores.pro != scores.con` enforced (validator raises on equality)
+  - [x] rationale + highlights fields
+- [x] `protocol/builder.py`: helpers to construct envelopes (id/timestamp generation)
+- [x] **Tests** `tests/test_protocol_message.py`:
+  - [x] round-trip serialize/deserialize
+  - [x] invalid message rejected
+- [x] **Tests** `tests/test_verdict_no_tie.py`:
+  - [x] equal scores rejected at model level
+  - [x] null/"tie" winner rejected
+  - [x] valid differential verdict accepted
 
 ### 1.3 Observability (`observability/`)
-- [ ] `observability/redaction.py`:
-  - [ ] regex/known-key scrubbing of secrets/PII
-  - [ ] `redact(text) -> text` used by ALL log writes
-  - [ ] redact common key patterns (sk-, Bearer, api_key=…)
-- [ ] `observability/fifo_logger.py`:
-  - [ ] writes structured (JSON line) entries
-  - [ ] rotation: ≤ `fifo_max_lines_per_file` per file
-  - [ ] rotation: ≤ `fifo_max_files`; delete oldest first (FIFO)
-  - [ ] applies `redact()` before writing
-  - [ ] config-driven dir/level/limits
-- [ ] **Tests** `tests/test_redaction.py`:
-  - [ ] planted secret is masked in output
-- [ ] **Tests** `tests/test_fifo_logger.py`:
-  - [ ] exceeding line cap rolls a new file
-  - [ ] exceeding file cap deletes oldest
-  - [ ] secret never written verbatim
+- [x] `observability/redaction.py`:
+  - [x] regex/known-key scrubbing of secrets/PII
+  - [x] `redact(text) -> text` used by ALL log writes
+  - [x] redact common key patterns (sk-, Bearer, api_key=…)
+- [x] `observability/fifo_logger.py`:
+  - [x] writes structured (JSON line) entries
+  - [x] rotation: ≤ `fifo_max_lines_per_file` per file
+  - [x] rotation: ≤ `fifo_max_files`; delete oldest first (FIFO)
+  - [x] applies `redact()` before writing
+  - [x] config-driven dir/level/limits
+- [x] **Tests** `tests/test_redaction.py`:
+  - [x] planted secret is masked in output
+- [x] **Tests** `tests/test_fifo_logger.py`:
+  - [x] exceeding line cap rolls a new file
+  - [x] exceeding file cap deletes oldest
+  - [x] secret never written verbatim
 
 ### 1.4 Gatekeeper (`gatekeeper/`)
-- [ ] `gatekeeper/budget.py`: accounting of calls, tokens, USD
-  - [ ] cost estimation per provider/model (from config rates)
-  - [ ] running totals
-- [ ] `gatekeeper/limiter.py`:
-  - [ ] `check(estimated)` raises/blocks if a limit would be crossed
-  - [ ] `record(actual)` updates totals after a call
-  - [ ] `blocked()` / status accessor
-- [ ] **Tests** `tests/test_gatekeeper.py`:
-  - [ ] allows under all limits
-  - [ ] blocks at call limit
-  - [ ] blocks at token limit
-  - [ ] blocks at USD limit
+- [x] `gatekeeper/budget.py`: accounting of calls, tokens, USD
+  - [x] cost estimation per provider/model (from config rates)
+  - [x] running totals
+- [x] `gatekeeper/limiter.py`:
+  - [x] `check(estimated)` raises/blocks if a limit would be crossed
+  - [x] `record(actual)` updates totals after a call
+  - [x] `blocked()` / status accessor
+- [x] **Tests** `tests/test_gatekeeper.py`:
+  - [x] allows under all limits
+  - [x] blocks at call limit
+  - [x] blocks at token limit
+  - [x] blocks at USD limit
 
 ### 1.5 Phase 1 exit gate
-- [ ] **G-ALL** clean
-- [ ] Commit: "phase 1: config, protocol, logging, redaction, gatekeeper"
+- [x] **G-ALL** clean
+- [x] Commit: "phase 1: config, protocol, logging, redaction, gatekeeper"
 
 ---
 
@@ -564,8 +564,8 @@
 
 ## Progress tracker (update as phases close)
 
-- [ ] Phase 0 — Bootstrap & safety rails
-- [ ] Phase 1 — Cross-cutting services
+- [x] Phase 0 — Bootstrap & safety rails
+- [x] Phase 1 — Cross-cutting services
 - [ ] Phase 2 — Security primitives
 - [ ] Phase 3 — LLM provider layer
 - [ ] Phase 4 — Web search tool
