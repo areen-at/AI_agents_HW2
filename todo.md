@@ -218,37 +218,37 @@
 ## Phase 3 — LLM provider layer
 
 ### 3.1 Provider contract (`llm/base.py`)
-- [ ] Define `Completion` dataclass/model (text, tokens_used, model, latency_ms)
-- [ ] Abstract `LLMProvider.complete(system, messages, **opts) -> Completion`
-- [ ] Define provider-selection factory (reads `llm.provider` from config)
+- [x] Define `Completion` dataclass/model (text, tokens_used, model, latency_ms)
+- [x] Abstract `LLMProvider.complete(system, messages, **opts) -> Completion`
+- [x] Define provider-selection factory (reads `llm.provider` from config) — `llm/factory.py`
 
 ### 3.2 Resilience wrapper (`llm/resilience.py`)
-- [ ] **Timeout** per request (config `request_seconds`)
-- [ ] **Retry + backoff** on transient errors (config `retries`, `backoff_seconds`)
-- [ ] **Circuit breaker** (open after N consecutive failures)
-- [ ] Gatekeeper `check()` before call, `record()` after
-- [ ] Redacted logging of request/response metadata
-- [ ] Single decorator/wrapper reused by ALL providers (no duplication)
-- [ ] **Tests** `tests/test_llm_resilience.py`:
-  - [ ] timeout path handled
-  - [ ] retry on transient error then success
-  - [ ] circuit breaker trips after threshold
-  - [ ] gatekeeper invoked (check + record)
+- [x] **Timeout** per request (config `request_seconds`)
+- [x] **Retry + backoff** on transient errors (config `retries`, `backoff_seconds`)
+- [x] **Circuit breaker** (open after N consecutive failures) — `llm/circuit.py`
+- [x] Gatekeeper `check()` before call, `record()` after
+- [x] Redacted logging of request/response metadata
+- [x] Single decorator/wrapper reused by ALL providers (no duplication)
+- [x] **Tests** `tests/test_llm_resilience.py`:
+  - [x] timeout path handled
+  - [x] retry on transient error then success
+  - [x] circuit breaker trips after threshold
+  - [x] gatekeeper invoked (check + record)
 
 ### 3.3 Mock provider (`llm/mock.py`)
-- [ ] Deterministic, scriptable responses (queue/sequence)
-- [ ] Canned "over-agreement" output (for judge-intervention test)
-- [ ] Canned "tie / equal-score" output (for no-tie test)
-- [ ] No network, no key, no spend
+- [x] Deterministic, scriptable responses (queue/sequence)
+- [x] Canned "over-agreement" output (for judge-intervention test)
+- [x] Canned "tie / equal-score" output (for no-tie test)
+- [x] No network, no key, no spend
 
 ### 3.4 Real providers
-- [ ] `llm/anthropic.py` (default): map contract → Anthropic SDK
-- [ ] `llm/openai.py` (optional): map contract → OpenAI SDK
-- [ ] Both go through `resilience.py` (never called raw)
+- [x] `llm/anthropic.py` (default): map contract → Anthropic SDK
+- [x] `llm/openai.py` (optional): map contract → OpenAI SDK
+- [x] Both go through `resilience.py` (never called raw)
 
 ### 3.5 Phase 3 exit gate
-- [ ] **G-ALL** clean (real providers smoke-tested manually, skipped in CI)
-- [ ] Commit: "phase 3: LLM abstraction + resilience + mock"
+- [x] **G-ALL** clean (real providers smoke-tested manually, skipped in CI)
+- [x] Commit: "phase 3: LLM abstraction + resilience + mock"
 
 ---
 
@@ -554,11 +554,11 @@
 
 ## Open decisions to resolve (gating Phase 3)
 
-- [ ] D-1 LLM backend: Anthropic (default) / OpenAI / both behind abstraction
+- [x] D-1 LLM backend: Anthropic (default) / OpenAI / both behind abstraction
 - [ ] D-2 Session-1 topic
 - [ ] D-3 Web-search provider + its egress allowlist
 - [ ] D-4 Rounds: 10 (full) or 5 (budget — disclose in README)
-- [ ] D-5 Config format: YAML (assumed) vs. TOML
+- [x] D-5 Config format: YAML (assumed) vs. TOML
 
 ---
 
@@ -567,7 +567,7 @@
 - [x] Phase 0 — Bootstrap & safety rails
 - [x] Phase 1 — Cross-cutting services
 - [x] Phase 2 — Security primitives
-- [ ] Phase 3 — LLM provider layer
+- [x] Phase 3 — LLM provider layer
 - [ ] Phase 4 — Web search tool
 - [ ] Phase 5 — Agent hierarchy
 - [ ] Phase 6 — Orchestration
