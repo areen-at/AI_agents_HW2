@@ -10,7 +10,8 @@ llm:
   debater_model: llama-3.1-8b-instant    # debaters: fast + cheap
   temperature: 0.8               # debaters: more creative
   judge_temperature: 0.2         # judge: more deterministic
-  max_tokens: 800
+  max_tokens: 400                # caps output tokens (debaters word-capped anyway);
+                                 # smaller completions stay under Groq free-tier TPM
   # USD cost per 1M tokens, used by the gatekeeper for estimates
   # (Groq llama-3.3-70b rates — conservative upper bound).
   cost_per_mtok_input: 0.59
@@ -18,19 +19,21 @@ llm:
 
 debate:
   topic: "Which is better: Barcelona or Real Madrid?"
-  rounds_per_side: 10            # may set to 5 (disclose in README)
+  rounds_per_side: 5             # BUDGET MODE (disclosed): 5/side instead of 10
+                                 # to stay within the Groq free-tier rate limits.
   max_words_per_turn: 150
   pro_skill: "evidence-and-data persuader"
   con_skill: "emotional-and-rhetorical persuader"
 
 timeouts:
   request_seconds: 60
-  retries: 2
-  backoff_seconds: 2
-  circuit_breaker_threshold: 3   # consecutive failures before opening
+  retries: 5                     # weather Groq free-tier 429s (token-per-minute bucket)
+  backoff_seconds: 10            # escalating waits (10s,20s,...) let the TPM bucket refill
+  circuit_breaker_threshold: 8   # consecutive failures before opening (headroom for pacing)
 
 watchdog:
-  keepalive_seconds: 15
+  keepalive_seconds: 150         # allow in-turn backoff to wait out a rate window;
+                                 # request_seconds still bounds any single hung call
   max_restarts: 3
 
 gatekeeper:
@@ -42,6 +45,7 @@ search:
   provider: tavily               # web search backend
   max_results: 3
   request_seconds: 20
+  cache: true                    # memoise identical queries (1 live call/side per debate)
   # Anti-SSRF egress allowlist — only these hosts may be contacted.
   allowed_domains:
     - "api.tavily.com"

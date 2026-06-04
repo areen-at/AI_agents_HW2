@@ -1,0 +1,5 @@
+WINNER: PRO
+SCORES: pro=82.0  con=78.0
+
+RATIONALE:
+The PRO side presented a more cohesive and well-structured argument, effectively using data and studies to support their claims. They also demonstrated a stronger ability to address counterarguments and adapt to the CON side's rebuttals. While the CON side raised some valid points, their argument was often more reactive and struggled to gain momentum.

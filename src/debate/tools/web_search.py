@@ -41,6 +41,7 @@ class WebSearchTool:
         endpoint: str = _ENDPOINT,
         gatekeeper: Gatekeeper | None = None,
         logger: object | None = None,
+        enable_cache: bool = True,
     ) -> None:
         self._api_key = api_key
         self._max_results = max_results
@@ -50,9 +51,18 @@ class WebSearchTool:
         self._endpoint = endpoint
         self._gatekeeper = gatekeeper
         self._logger = logger
+        self._enable_cache = enable_cache
+        self._cache: dict[str, list[Citation]] = {}
 
     def search(self, query: str) -> list[Citation]:
-        """Return up to ``max_results`` sanitized citations; ``[]`` on any failure."""
+        """Return up to ``max_results`` sanitized citations; ``[]`` on any failure.
+
+        Identical queries are served from an in-memory cache (no network, no
+        gatekeeper charge) so repeated per-side research stays within budget.
+        """
+        if self._enable_cache and query in self._cache:
+            self._log("web_search_cache_hit", query=query)
+            return list(self._cache[query])
         try:
             egress.validate_url(self._endpoint, allowed_domains=self._allowed)
             if self._gatekeeper is not None:
@@ -64,6 +74,8 @@ class WebSearchTool:
         if self._gatekeeper is not None:
             self._gatekeeper.record(Usage(calls=1))
         citations = parse_results(raw, sanitize=self._sanitize, max_results=self._max_results)
+        if self._enable_cache:
+            self._cache[query] = list(citations)
         self._log("web_search_ok", query=query, results=len(citations))
         return citations
 

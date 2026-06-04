@@ -6,6 +6,11 @@ and the relay is fed to that opponent next — guaranteeing **mutual response**
 with the opponent's prior message linked via ``rebuts_message_id``. Pro's very
 first turn opens with the motion; every later turn rebuts the last relay it
 received. Each turn runs through ``guard`` (the watchdog) so a hang is contained.
+
+Before producing each turn the debater does **one** web-research call (a stable
+per-side query); the search tool's own cache collapses these to a single live
+request per side per debate. Research degrades to no citations when no web tool
+is configured (mock runs) or the call fails.
 """
 
 from __future__ import annotations
@@ -13,7 +18,7 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from ..agents.debater import DebaterAgent
-from ..protocol.message import Message, Party
+from ..protocol.message import Citation, Message, Party
 from .router import Router
 from .transcript import Transcript
 
@@ -56,10 +61,16 @@ class Round:
         self._deliver(agent.role, result.relay)
 
     def _act(self, agent: DebaterAgent, incoming: Message | None, number: int) -> Message:
+        citations = self._research(agent)
         if incoming is None:
             context = f"The motion under debate is: {self._topic}" if self._topic else ""
-            return agent.argue(number, context=context)
-        return agent.rebut(incoming, number)
+            return agent.argue(number, context=context, citations=citations)
+        return agent.rebut(incoming, number, citations=citations)
+
+    def _research(self, agent: DebaterAgent) -> list[Citation]:
+        """One stable per-side research query; cache makes repeats free. ``[]`` if no web."""
+        query = f"{self._topic} {agent.role.value} arguments".strip()
+        return agent.research(query)
 
     def _deliver(self, role: Party, relay: Message) -> None:
         if role is Party.PRO:

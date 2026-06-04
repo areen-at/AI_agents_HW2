@@ -389,107 +389,109 @@
 ## Phase 7 — SDK & interface layers
 
 ### 7.1 SDK (`sdk.py`)
-- [ ] `DebateSDK.run_debate(topic=None, rounds=None) -> DebateResult`
-- [ ] Accessors: `.transcript`, `.verdict`
-- [ ] Interface-agnostic (no print/menu logic here)
-- [ ] Usable in ~5 lines of Python (self-debug entry point)
-- [ ] **Tests** `tests/test_sdk.py`:
-  - [ ] full MockLLM debate → decisive verdict + correct exchange count
+- [x] `DebateSDK.run_debate(topic=None, rounds=None) -> DebateResult`
+- [x] Accessors: `.transcript`, `.verdict`
+- [x] Interface-agnostic (no print/menu logic here)
+- [x] Usable in ~5 lines of Python (self-debug entry point)
+- [x] **Tests** `tests/test_sdk.py`:
+  - [x] full MockLLM debate → decisive verdict + correct exchange count
 
 ### 7.2 Terminal menu (`ui/menu.py`, `ui/actions.py`)
-- [ ] `ui/menu.py`: render keyboard menu loop
-  - [ ] `[1] Configure topic/rounds`
-  - [ ] `[2] Run debate (live print)`
-  - [ ] `[3] View last transcript`
-  - [ ] `[4] View verdict`
-  - [ ] `[5] Settings`
-  - [ ] `[0] Exit`
-- [ ] `ui/actions.py`: action handlers → call `DebateSDK` only (no business logic)
-- [ ] Input validation on menu selections
-- [ ] **Tests**: menu smoke-tested with scripted stdin
+- [x] `ui/menu.py`: render keyboard menu loop
+  - [x] `[1] Configure topic/rounds`
+  - [x] `[2] Run debate (live print)`
+  - [x] `[3] View last transcript`
+  - [x] `[4] View verdict`
+  - [x] `[5] Settings`
+  - [x] `[0] Exit`
+- [x] `ui/actions.py`: action handlers → call `DebateSDK` only (no business logic)
+- [x] Input validation on menu selections
+- [x] **Tests**: menu smoke-tested with scripted stdin
 
 ### 7.3 Entry point
-- [ ] `__main__.py` launches the menu
-- [ ] `uv run python -m debate` → working menu
+- [x] `__main__.py` launches the menu
+- [x] `uv run python -m debate` → working menu
 
 ### 7.4 Phase 7 exit gate
-- [ ] **G-ALL** clean
-- [ ] Both run paths verified (menu + SDK)
-- [ ] Commit: "phase 7: SDK + terminal menu"
+- [x] **G-ALL** clean
+- [x] Both run paths verified (menu + SDK)
+- [x] Commit: "phase 7: SDK + terminal menu interface"
 
 ---
 
 ## Phase 8 — Hardening, real run, audit
 
 ### 8.1 Real wiring
-- [ ] Configure real LLM provider + key in `.env` (local only)
-- [ ] Configure real web-search provider + egress allowlist
-- [ ] Choose session-1 topic (e.g., Barcelona vs. Real Madrid)
+- [x] Configure real LLM provider + key in `.env` (local only)
+- [~] Configure real web-search provider + egress allowlist (configured; no SEARCH_API_KEY present)
+- [x] Choose session-1 topic (e.g., Barcelona vs. Real Madrid)
 
 ### 8.2 Real debate run (session 1)
-- [ ] Run a full debate (10 rounds/side, or 5 with disclosure)
-- [ ] Save full **JSON transcript**
-- [ ] Save **human-readable transcript**
-- [ ] Save the **verdict** (winner + differential scores + rationale)
+- [x] Run a full debate (10 rounds/side, or 5 with disclosure)
+- [x] Save full **JSON transcript**
+- [x] Save **human-readable transcript**
+- [x] Save the **verdict** (winner + differential scores + rationale)
 
 ### 8.3 Evidence capture (for README)
-- [ ] Screenshot: terminal menu
-- [ ] Screenshot: debate running (live)
-- [ ] Screenshot: verdict screen
+- [!] Screenshot: terminal menu  (manual capture pending)
+- [!] Screenshot: debate running (live)  (manual capture pending)
+- [!] Screenshot: verdict screen  (manual capture pending)
 - [ ] (Optional GUI) screenshots if a GUI is built
 
 ### 8.4 Engineering-feature demonstrations
-- [ ] Demonstrate **gatekeeper block** (lower a limit, show halt) + capture
-- [ ] Demonstrate **watchdog restart** (inject a hang) + capture
-- [ ] Demonstrate **timeout handling** + capture
-- [ ] Demonstrate **prompt-injection containment** (planted payload neutralized) + capture
-- [ ] Demonstrate **judge intervention** on over-agreement + capture
+- [x] Demonstrate **gatekeeper block** (lower a limit, show halt) + capture
+- [x] Demonstrate **watchdog restart** (inject a hang) + capture
+- [x] Demonstrate **timeout handling** + capture
+- [x] Demonstrate **prompt-injection containment** (planted payload neutralized) + capture
+- [x] Demonstrate **judge intervention** on over-agreement + capture
 
 ### 8.5 Security audit
-- [ ] `bandit` clean (or all findings triaged/justified)
-- [ ] `pip-audit` clean (or CVEs accepted with rationale)
-- [ ] `gitleaks` clean
-- [ ] Scan FULL git history → confirm `.env`/keys never committed
-- [ ] Confirm only `.env.example` is tracked
+- [x] `bandit` clean (or all findings triaged/justified)
+- [x] `pip-audit` clean (or CVEs accepted with rationale)
+- [~] `gitleaks` clean (binary not installed locally; pinned in pre-commit + manual history scan clean)
+- [x] Scan FULL git history → confirm `.env`/keys never committed
+- [x] Confirm only `.env.example` is tracked
 
 ### 8.6 Coverage & quality
-- [ ] Raise coverage on core + security paths to target
-- [ ] `ruff` + `ruff format` final pass
-- [ ] **G-LEN** final pass across whole repo
+- [x] Raise coverage on core + security paths to target
+- [x] `ruff` + `ruff format` final pass
+- [x] **G-LEN** final pass across whole repo
 
 ### 8.7 Phase 8 exit gate
-- [ ] **G-ALL** clean + all demos captured
-- [ ] Commit: "phase 8: real session, demos, security audit"
+- [~] **G-ALL** clean + demos captured (screenshots + live web search pending)
+- [x] Commit: "phase 8: real session, demos, security audit"
 
 ---
 
 ## Phase 9 — Documentation & submission
 
 ### 9.1 Architecture docs (`docs/`)
-- [ ] `docs/architecture.md`: layer diagram + **class diagram** (from PRD §2.3)
-- [ ] `docs/threat-model.md`: expanded STRIDE table + controls
+- [x] `docs/architecture.md`: layer diagram + **class diagram** (from PRD §2.3)
+- [x] `docs/threat-model.md`: expanded STRIDE table + controls
 
 ### 9.2 README.md (the graded artifact)
-- [ ] Project overview
-- [ ] **Rules of the game**: persuasion-not-truth, no tie, topic-blind judge,
+- [x] Project overview
+- [x] **Rules of the game**: persuasion-not-truth, no tie, topic-blind judge,
       lying allowed, anti-agreement
-- [ ] **Architecture + class diagram** (embed/reference `docs/`)
-- [ ] **Threat model summary** + security controls
-- [ ] Setup via **UV**: `uv sync`, run menu, run via SDK (copy-paste commands)
-- [ ] **Prompts** used: Pro, Con, Judge (full text)
-- [ ] **Screenshots** (menu, running debate, verdict)
-- [ ] **Full dialogue log of session 1** (readable)
-- [ ] Engineering notes: timeouts, watchdog, gatekeeper, FIFO logging, JSON protocol,
+- [x] **Architecture + class diagram** (embed/reference `docs/`)
+- [x] **Threat model summary** + security controls
+- [x] Setup via **UV**: `uv sync`, run menu, run via SDK (copy-paste commands)
+- [x] **Prompts** used: Pro, Con, Judge (full text)
+- [~] **Screenshots** (menu, running debate, verdict) — text evidence committed;
+      image capture pending manual run
+- [x] **Full dialogue log of session 1** (readable)
+- [x] Engineering notes: timeouts, watchdog, gatekeeper, FIFO logging, JSON protocol,
       security controls
-- [ ] **Budget disclosure** if rounds reduced 10 → 5
-- [ ] Language note (English/Hebrew, not Arabic)
-- [ ] How to run tests + linters (`pytest`, `ruff`, `bandit`)
+- [x] **Budget disclosure** if rounds reduced 10 → 5
+- [x] Language note (English/Hebrew, not Arabic)
+- [x] How to run tests + linters (`pytest`, `ruff`, `bandit`)
 
 ### 9.3 Repository hygiene
-- [ ] Confirm `.env.example` committed; `.env` absent
-- [ ] Confirm `pyproject.toml` + `uv.lock` provision the full env
-- [ ] Make repo **public** (or share with lecturer) — verify access
-- [ ] Tag/release the submission commit
+- [x] Confirm `.env.example` committed; `.env` absent
+- [~] `pyproject.toml` provisions the env (`uv sync` / pip -e); `uv.lock` not yet
+      committed (generated on first `uv sync` — uv not installed in dev env)
+- [ ] Make repo **public** (or share with lecturer) — verify access  (manual)
+- [ ] Tag/release the submission commit  (manual)
 
 ### 9.4 Submission (pair)
 - [ ] Same repo link for both partners
@@ -513,7 +515,8 @@
       opponent's prior message (mutual response verifiable in JSON)
 - [ ] AC-4 Judge produces a decisive verdict (differential scores + rationale); no tie ever
 - [ ] AC-5 Judge intervenes on over-agreement (demonstrable via forced scenario)
-- [ ] AC-6 Web search tool invoked; citations appear in the log
+- [~] AC-6 Web search tool wired into the loop (round.py research per side, cached) +
+      citations attach to turns — mock/stub-tested; live run pending a Tavily key
 - [ ] AC-7 All inter-agent traffic is JSON and persisted; logs use FIFO rotation
 - [ ] AC-8 Timeouts + watchdog recover from a hung/crashed agent
 - [ ] AC-9 Gatekeeper halts the run at a configured limit
@@ -555,9 +558,10 @@
 ## Open decisions to resolve (gating Phase 3)
 
 - [x] D-1 LLM backend: Anthropic (default) / OpenAI / both behind abstraction
-- [ ] D-2 Session-1 topic
-- [ ] D-3 Web-search provider + its egress allowlist
-- [ ] D-4 Rounds: 10 (full) or 5 (budget — disclose in README)
+- [x] D-2 Session-1 topic: Barcelona vs. Real Madrid
+- [~] D-3 Web-search provider: Tavily (api.tavily.com allowlist); research() now wired
+      into the debate loop (1 cached call/side) — mock/stub-tested; live needs a key
+- [x] D-4 Rounds: 5 (budget mode — disclosed in docs/sessions/session-01/SUMMARY.md)
 - [x] D-5 Config format: YAML (assumed) vs. TOML
 
 ---
@@ -571,6 +575,9 @@
 - [x] Phase 4 — Web search tool (live smoke test deferred to Phase 8)
 - [x] Phase 5 — Agent hierarchy
 - [x] Phase 6 — Orchestration
-- [ ] Phase 7 — SDK & interface
-- [ ] Phase 8 — Hardening, real run, audit
-- [ ] Phase 9 — Documentation & submission
+- [x] Phase 7 — SDK & interface
+- [~] Phase 8 — Hardening, real run, audit (live run + demos + audit done;
+      screenshots and live web-search smoke test pending — see notes)
+- [~] Phase 9 — Documentation & submission (README + architecture.md +
+      threat-model.md written; remaining items are manual submission steps:
+      make repo public, tag the commit, create PDF, submit in Moodle)

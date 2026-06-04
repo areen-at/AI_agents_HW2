@@ -1,0 +1,29 @@
+LIVE WEB-SEARCH SMOKE TEST — STATUS: NOT RUN (no provider key available)
+========================================================================
+
+The hardened WebSearchTool (src/debate/tools/web_search.py) is fully
+implemented and unit-tested with mocked HTTP (tests/test_web_search.py — all
+green): it routes every request through the egress allowlist (anti-SSRF + HTTPS),
+counts the call with the gatekeeper, bounds it with a timeout, and runs every
+returned snippet through the sanitizer before an agent can see it.
+
+A *live* smoke test against the real Tavily API could NOT be executed in this
+environment because no SEARCH_API_KEY (Tavily) is present in .env — only
+GROQ_API_KEY is configured. Re-run once a key is available:
+
+    # add SEARCH_API_KEY=<tavily key> to .env, then:
+    python scripts/smoke_web_search.py "Barcelona vs Real Madrid Champions League titles"
+
+Note (orchestration): research() is now wired into the debate loop. Before each
+turn, orchestration/round.py issues ONE web-research call using a stable per-side
+query ("<topic> <pro|con> arguments") and attaches the citations to that turn.
+The WebSearchTool memoises identical queries (search.cache: true), so a whole
+debate makes at most one live request per side regardless of round count — and a
+cache hit is never charged to the gatekeeper. With no web tool (mock provider or
+missing key) research() is a no-op returning no citations, so mock runs are
+unaffected. Covered by tests/test_engine_routing.py (wiring + per-side stability)
+and tests/test_web_search_cache.py (cache behaviour).
+
+The historical session-01 (docs/sessions/session-01) predates a Tavily key and
+therefore shows no citations; re-run the capture with SEARCH_API_KEY set to see
+citations populate the transcript.
