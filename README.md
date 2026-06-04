@@ -176,52 +176,150 @@ Full text: [pro.md](src/debate/prompts/pro.md) ·
 
 ---
 
-## Session 1 — recorded debate
+## Session 2 — latest recorded run (fresh)
 
-**Topic:** *Which is better: Barcelona or Real Madrid?* · **Date:** 2026-06-03
+**Topic:** *Which is better: Barcelona or Real Madrid?* · **Date:** 2026-06-04
 **Backend:** Groq (judge `llama-3.3-70b-versatile`, debaters `llama-3.1-8b-instant`)
 
 | | |
 |---|---|
 | **Winner** | **PRO** (Barcelona) |
-| **Scores** | pro **82.0** vs con **78.0** — decisive, no tie |
-| **Exchanges** | 5 PRO + 5 CON (mutual response; each rebuttal links the prior relay) |
-| **LLM calls** | 11 successful (10 debater turns + 1 verdict); 1 transient 429 weathered |
+| **Scores** | pro **85.0** vs con **78.0** — decisive, no tie |
+| **Exchanges** | 5 PRO + 5 CON = 10 turns; every rebuttal links the prior relay |
 
-**Judge rationale (persuasiveness only):** *"The PRO side presented a more
-cohesive and well-structured argument, effectively using data and studies to
-support their claims… While the CON side raised some valid points, their
-argument was often more reactive and struggled to gain momentum."*
+**Judge rationale (persuasiveness only):**
+> *"The PRO side presented a more cohesive and structured argument, effectively
+> utilizing statistics and studies to support their claims. They successfully
+> addressed counterarguments and provided clear rebuttals, demonstrating a
+> stronger ability to adapt and respond to opposing views. While the CON side
+> raised some valid points, their arguments often relied on criticizing the
+> methodology of the studies cited by PRO, rather than presenting alternative
+> evidence or a compelling narrative of their own."*
 
-Full artifacts:
-[transcript.json](docs/sessions/session-01/transcript.json) (wire record) ·
-[transcript.txt](docs/sessions/session-01/transcript.txt) (readable) ·
-[verdict.txt](docs/sessions/session-01/verdict.txt) ·
-[SUMMARY.md](docs/sessions/session-01/SUMMARY.md). Reproduce with:
+Artifacts:
+[transcript.json](docs/sessions/session-02/transcript.json) ·
+[transcript.txt](docs/sessions/session-02/transcript.txt) ·
+[verdict.txt](docs/sessions/session-02/verdict.txt)
 
 ```bash
-python scripts/capture_session.py --rounds 5 --name session-01
+# reproduce this run:
+python scripts/capture_session.py --rounds 5 --name session-02
 ```
 
+### Full session-2 dialogue
+
 <details>
-<summary>Opening exchange (round 1) — click to expand</summary>
+<summary>Round 1 — Opening arguments</summary>
 
-**PRO → JUDGE:** *"…I am here to make the case for Barcelona as the superior
-football club. With a rich history of innovation and success… 'Barcelona's
-unique blend of possession-based football and emphasis on developing young
-players has yielded impressive results, including four Champions League titles
-since 2006.' (UEFA)… I urge the judge to recognize Barcelona's enduring
-excellence."*
+**[r1] PRO → JUDGE (argument)**
 
-**JUDGE → CON (relay):** *(same message forwarded verbatim)*
+> Honorable judge, I stand before you today to make the case for the superiority of Barcelona. As the greatest club in the history of Spanish football, Barcelona boasts an unparalleled legacy of innovation, excellence, and fan engagement. With a record 27 domestic league titles and 5 UEFA Champions League trophies, Barcelona's on-field success is undeniable. But it's not just about the wins – it's about the style, the skill, and the commitment to developing young players through La Masia, the legendary academy that has produced talent like Lionel Messi and Xavi Hernandez.
+>
+> According to a survey by Deloitte, Barcelona generates the highest revenue from sponsorships, merchandise, and matchday sales among all European football clubs (Deloitte, 2022). This financial prowess allows Barcelona to invest in top talent, world-class facilities, and a thriving youth development system, cementing its position as the benchmark for football excellence.
 
-**CON → JUDGE (rebuttal):** *"…while my opponent's rhetoric is convincing, it's
-nothing short of superficial. Beneath the glamour of Barcelona's trophy case
-lies a flawed narrative that prioritizes style over substance… Over-reliance on
-young players has left Barcelona ill-prepared for the physical and mental
-demands of the Champions League…"*
+**[r1] JUDGE → CON (relay):** *(same message forwarded verbatim — Child → Father → Child)*
+
+**[r1] CON → JUDGE (rebuttal)**
+
+> Honorable judge, while my opponent waxes poetic about Barcelona's storied past, I ask you to consider the elephant in the room: a club's greatness is not solely measured by trophies and revenue. What about the teams that have consistently underachieved despite their wealth and resources? The likes of Manchester City and Paris Saint-Germain come to mind, perpetually throwing money at a problem, yet never quite closing the gap. Furthermore, is Barcelona's vaunted legacy not built on the backs of players who are no longer with the club? The Messi-era Barcelona may have been a golden age, but the current team is a shadow of its former self. And as for La Masia, I'd argue that other clubs have successfully mimicked this model without the same level of success. Let's not confuse correlation with causation. Barcelona's success is not a unique snowflake – it's a product of its particular circumstances…
+
+**[r1] JUDGE → PRO (relay):** *(same message forwarded verbatim)*
 
 </details>
+
+<details>
+<summary>Round 2 — First rebuttals</summary>
+
+**[r2] PRO → JUDGE (rebuttal)**
+
+> Judge, while my opponent attempts to muddy the waters, I'd like to inject some clarity. Manchester City and Paris Saint-Germain's underperformance can be attributed to their inconsistent and often poor decision-making in the transfer market, as well as their failure to develop homegrown talent. In contrast, Barcelona's sustained success is built on the foundation of La Masia, which has produced an estimated 30% of the club's first-team players since 1990. This system has not been merely mimicked, but replicated with varying degrees of success. The fact remains that Barcelona has won six titles since 2010, while City and PSG have combined for four. Furthermore, Barcelona's legacy is not solely tied to individual players, but the collective effort of the club's history, including iconic players like Cruyff, Maradona, and Guardiola. We must not overlook the data – Barcelona's system has proven to be a winning formula.
+
+**[r2] JUDGE → CON (relay):** *(forwarded)*
+
+**[r2] CON → JUDGE (rebuttal)**
+
+> Judge, I strongly disagree with my opponent's attempt to use statistics as a panacea. Numbers can be selectively presented, but the truth behind them reveals a more nuanced reality. The six titles won by Barcelona under the 'La Masia' system? Many of these came during the reign of Pep Guardiola, a manager widely regarded as one of the greatest in history. The data my opponent cites does not account for the impact of Guardiola's leadership on those winning years. Furthermore, the reliance on homegrown talent, while admirable, restricts the club's ability to adapt to changing player markets and global trends. By contrast, City's and PSG's investment in the transfer market has allowed them to punch above their weight, acquiring top talent from around the world. The fact remains, my opponent's romanticized view of Barcelona's 'winning formula' ignores the complexity of football's ever-evolving landscape.
+
+**[r2] JUDGE → PRO (relay):** *(forwarded)*
+
+</details>
+
+<details>
+<summary>Round 3 — Escalating the evidence debate</summary>
+
+**[r3] PRO → JUDGE (rebuttal)**
+
+> Respectfully, the opposition's counterargument relies on a flawed assumption: that the success of Barcelona's 'La Masia' system can be isolated from the overall impact of the club's holistic approach. However, a comprehensive analysis of the club's history reveals that La Masia's core principles — investment in youth development, player loyalty, and a strong team culture — have consistently yielded exceptional results.
+>
+> For instance, a study by the International Centre for Sports Studies (CIES) found that teams with high proportions of homegrown players tend to perform better in the long term. Furthermore, a survey of European top-tier clubs revealed that teams with a strong youth academy culture tend to be more resilient in the face of managerial change. These data points underscore the significance of Barcelona's approach, which prioritizes developing talent from within.
+
+**[r3] JUDGE → CON (relay):** *(forwarded)*
+
+**[r3] CON → JUDGE (rebuttal)**
+
+> I implore the judge to look beyond the superficial statistics and anecdotal evidence presented by my opponent. Their reliance on a single study by the International Centre for Sports Studies (CIES) ignores the inherent flaws in the data. Correlation does not imply causation, and we must question the causal link between homegrown players and long-term performance.
+>
+> Moreover, the survey of European top-tier clubs referenced by my opponent is anecdotal and lacks rigorous methodology. It is a convenient cherry-picking of clubs that have successfully implemented youth development programs, without accounting for the many others that have failed.
+>
+> Let us not be swayed by convenient narratives and data that support a predetermined conclusion. I urge the judge to consider the nuanced complexities of football club management and the numerous factors at play. We must not oversimplify the issue and rely on shallow evidence.
+
+**[r3] JUDGE → PRO (relay):** *(forwarded)*
+
+</details>
+
+<details>
+<summary>Round 4 — Methodology cross-examination</summary>
+
+**[r4] PRO → JUDGE (rebuttal)**
+
+> I strongly disagree with my opponent's assertions. The CIES study not only demonstrates a statistically significant correlation between homegrown players and long-term performance but also controls for numerous variables such as team budget and squad size. The results indicate a robust causal link.
+>
+> Moreover, the survey of European top-tier clubs cited in the CIES study involved rigorous qualitative analysis of 34 clubs, including interviews with decision-makers and detailed case studies. This was not simply a 'cherry-picking' exercise, as my opponent suggests.
+>
+> While it is true that football club management is complex, this complexity does not justify ignoring evidence that suggests a clear benefit to investing in youth development. In fact, studies have consistently shown that developing homegrown talent leads to increased local engagement, improved brand loyalty, and more sustainable long-term success. The evidence, not anecdotal claims, should guide our decision-making.
+
+**[r4] JUDGE → CON (relay):** *(forwarded)*
+
+**[r4] CON → JUDGE (rebuttal)**
+
+> I must respectfully disagree with my opponent's assertion that the CIES study provides conclusive evidence for a causal link between homegrown players and long-term performance. While the study may control for some variables, it overlooks the elephant in the room: the lack of correlation between homegrown players and championships won. The survey of European top-tier clubs, though rigorous, is limited to 34 clubs and relies heavily on qualitative analysis. This methodological approach is inherently subjective and vulnerable to bias. Furthermore, the study's reliance on self-reported data from decision-makers raises serious concerns about the accuracy of the results. Rather than ignoring evidence, I believe we should consider the nuanced and complex nature of football club management. Developing homegrown talent is just one aspect of a successful club, and we must not oversimplify the issue.
+
+**[r4] JUDGE → PRO (relay):** *(forwarded)*
+
+</details>
+
+<details>
+<summary>Round 5 — Closing arguments</summary>
+
+**[r5] PRO → JUDGE (rebuttal)**
+
+> I strongly disagree with my opponent's attempt to dismiss the CIES study's findings. While it's true that the survey of European top-tier clubs is limited to 34 clubs, this focused approach actually strengthens the study's results. The rigorous methodology and control for variables demonstrate a high level of statistical reliability. Furthermore, the study's emphasis on long-term performance is a crucial aspect of evaluating the success of homegrown players. According to CIES data, 71% of Champions League winners between 2000 and 2019 had a high proportion of homegrown players in their squads (CIES, 2020). This correlation cannot be ignored and warrants further investigation. Rather than oversimplifying the issue, I believe we should acknowledge the clear evidence that homegrown players play a significant role in a club's long-term success.
+
+**[r5] JUDGE → CON (relay):** *(forwarded)*
+
+**[r5] CON → JUDGE (rebuttal)**
+
+> While my opponent tries to elevate the CIES study, I argue that it's precisely their narrow focus on top-tier European clubs that undermines its broader relevance. By excluding clubs from other continents and leagues, the study creates a skewed narrative that benefits the privileged elite. Moreover, the study's emphasis on long-term performance is a clever smokescreen, distracting from its failure to account for other crucial factors, like economic resources and scouting networks. The 71% figure cited from CIES (2020) is more a testament to the dominance of European football than any inherent benefit of homegrown players. We should not be swayed by cherry-picked statistics; instead, we must consider the global football landscape in its entirety. The notion that homegrown players are the key to success is a simplistic, Eurocentric myth, and I urge us to look beyond this narrow, provincial perspective.
+
+**[r5] JUDGE → PRO (relay):** *(forwarded)*
+
+</details>
+
+**Verdict — PRO wins 85 – 78.**
+The PRO side consistently advanced evidence-backed arguments (La Masia statistics,
+CIES studies, Deloitte revenue data) and rebutted each counter. CON contested
+methodology but never produced alternative evidence or a positive case for Real
+Madrid, leaving PRO's narrative structurally dominant.
+
+---
+
+## Session 1 — earlier recorded run (historical)
+
+**Date:** 2026-06-03 · **Winner:** PRO 82.0 – CON 78.0
+
+Full artifacts: [transcript.txt](docs/sessions/session-01/transcript.txt) ·
+[verdict.txt](docs/sessions/session-01/verdict.txt) ·
+[SUMMARY.md](docs/sessions/session-01/SUMMARY.md)
 
 ---
 
